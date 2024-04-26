@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  my_api:
+    container_name: my_api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - '3010:3010'
+    command: npm run start
+    env_file:
+      - .env
+    depends_on:
+      - mysql_db_latest
+
+  mysql_db_latest:
+    container_name: mysql_db_latest
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "nossaescola"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - mysqldata:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+volumes:
+  mysqldata:
