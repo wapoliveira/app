@@ -6,7 +6,7 @@ FROM node:18
 WORKDIR /app
 
 # Copias ambos os arquivos package.json e yarn.lock
-COPY package.json yarn.lock ./
+COPY package.json ./
 
 # Instala as dependencias
 RUN npm
